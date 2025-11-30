@@ -1,19 +1,18 @@
-// Trigger music with SweetAlert
+// Auto-play music (muted) and start animation
 window.addEventListener('load', () => {
-    Swal.fire({
-        title: 'Do you want to play music in the background?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.querySelector('.song').play();
-        }
-        animationTimeline();
-    });
+    const audio = document.querySelector('.song');
+    audio.muted = true;      // start muted to allow autoplay
+    audio.loop = true;
+    audio.play();
+
+    animationTimeline();     // start your animation immediately
+
+    // Optional: unmute on first user interaction
+    window.addEventListener('click', () => {
+        audio.muted = false;
+        audio.volume = 0.2;  // adjust volume as needed
+        audio.play();
+    }, { once: true });
 });
 
 // animation timeline
