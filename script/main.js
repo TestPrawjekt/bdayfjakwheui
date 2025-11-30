@@ -1,18 +1,51 @@
-// Auto-play music (muted) and start animation
 window.addEventListener('load', () => {
     const audio = document.querySelector('.song');
-    audio.muted = true;      // start muted to allow autoplay
-    audio.loop = true;
-    audio.play();
 
-    animationTimeline();     // start your animation immediately
+    // Create the start circle dynamically
+    const startCircle = document.createElement('div');
+    startCircle.id = 'start-circle';
+    startCircle.textContent = '▶';
+    document.body.appendChild(startCircle);
 
-    // Optional: unmute on first user interaction
-    window.addEventListener('click', () => {
-        audio.muted = false;
-        audio.volume = 0.2;  // adjust volume as needed
+    // Apply styles via JS
+    Object.assign(startCircle.style, {
+        width: '100px',
+        height: '100px',
+        backgroundColor: '#349d8b',
+        borderRadius: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: '2rem',
+        cursor: 'pointer',
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: '9999',
+        boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+        transition: 'transform 0.2s ease',
+    });
+
+    // Hover effect
+    startCircle.addEventListener('mouseenter', () => {
+        startCircle.style.transform = 'translate(-50%, -50%) scale(1.1)';
+    });
+    startCircle.addEventListener('mouseleave', () => {
+        startCircle.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+
+    // Click event to start audio and animation
+    startCircle.addEventListener('click', () => {
+        audio.volume = 0.2; // adjust volume
+        audio.loop = true;
         audio.play();
-    }, { once: true });
+
+        animationTimeline(); // start your animation
+
+        startCircle.remove(); // remove circle after click
+    });
 });
 
 // animation timeline
