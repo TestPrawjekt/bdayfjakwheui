@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     const audio = document.querySelector('.song');
 
     // Create the start circle dynamically
